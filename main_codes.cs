@@ -1,22 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
+/// <summary>
+/// <right>کدهای پایه</right>
+/// <right>نسخه: 1.0.0</right>
+/// <right>تاریخ: 1403.07.11</right>
+/// </summary>
 namespace HJafr.main_codes
 {
-    public class code
+    public class Code
     {
-        /// <summary>
+        /// <summary><right>
         /// کپی کردن درست از نوشته تا آخر
-        /// </summary>
+        /// </right></summary>
         /// <param name="text">نوشته</param>
         /// <param name="startIndex">خانه شروع</param>
         /// <returns></returns>
-        public static string SubStr(string text, int startIndex) => SubStr(text, startIndex, text.Length - startIndex);
-        /// <summary>
+        public static string SubStr(string text, int startIndex) { return SubStr(text, startIndex, text.Length - startIndex); }
+
+        /// <summary><right>
         /// کپی کردن درست از نوشته
-        /// </summary>
+        /// </right></summary>
         /// <param name="text">نوشته</param>
         /// <param name="startIndex">خانه شروع</param>
         /// <param name="length">طول برداشت</param>
@@ -69,7 +76,7 @@ namespace HJafr.main_codes
                 payani.Add(list[i].ToString());
             return payani;
         }
-
+        public static string[] ToString(int[] list) { return ToString(list.ToList()).ToArray(); }
         public static string jame(string[] text)
         {
             string payani = "";
@@ -104,7 +111,8 @@ namespace HJafr.main_codes
                 else break;
             return num;
         }
-        public static List<int> int_min_max(List<int> num, int max, int min) => int_max(int_min(num, min), max);
+        public static List<int> int_min_max(List<int> num, int max, int min) { return int_max(int_min(num, min), max); }
+
 
         public static int Round(int melak, int a, int b)
         {
@@ -141,7 +149,7 @@ namespace HJafr.main_codes
         }
     }
 
-    public class algoritm
+    public class Algoritm
     {
         public static List<int> jame_list_int(int majmooe, List<int> list_int, List<int> akhz = null)
         {
@@ -149,11 +157,12 @@ namespace HJafr.main_codes
             {
                 akhz = new List<int>();
                 //list_int = list_int.Distinct().ToList();        //  حذف تکراری‌ها
-                list_int = code.int_max(list_int, majmooe);        //  حذف اعداد اضافی از لیست کلی
+                //list_int = code.int_max(list_int, majmooe);        //  حذف اعداد اضافی از لیست کلی
             }
 
             bool done = false;
-            int jame_akhz = code.jame(akhz.ToArray());      //  جمع اعداد اخذ شده
+            int jame_akhz = Code.jame(akhz.ToArray());      //  جمع اعداد اخذ شده
+            list_int = Code.int_max(list_int, majmooe - jame_akhz);        //  حذف اعداد اضافی از لیست کلی
 
             while (list_int.Count > 0)
             {   //  چون هر بار، اولین آرایه حذف می‌شود و به ترتیب هم هست، همیشه از اولین آرایه استفاده می‌گردد
@@ -163,23 +172,26 @@ namespace HJafr.main_codes
                     done = true;
                     break;
                 }
-                else if (jame_akhz + list_int[0] + list_int[list_int.Count - 1] <= majmooe)     //  اگر جمع، کمتر از عدد دلخواه بود
+                else if (jame_akhz + list_int[0] + list_int[list_int.Count - 1] == majmooe)     //  اگر جمع، با عدد آخر برابر بود
+                {
+                    akhz.Add(list_int[0]);
+                    akhz.Add(list_int[list_int.Count - 1]);
+                    done = true;
+                    break;
+                }
+                else if (jame_akhz + list_int[0] + list_int[list_int.Count - 1] < majmooe)     //  اگر جمع، کمتر از عدد دلخواه بود
                 {
                     akhz.Add(list_int[0]);      //  افزودن عدد بعد به لیست موقت برای بررسی
                     list_int.RemoveAt(0);     //  حذف عدد از لیست
 
                     if (list_int.Count > 0)
                     {
-                        List<int> list_int__tmp = new List<int>(code.int_max(new List<int>(list_int), majmooe - (jame_akhz + list_int[0])));     //  حذف اعداد اضافی
-                        if (list_int__tmp.Count > 0)
-                        {
-                            akhz = new List<int>(jame_list_int(majmooe, new List<int>(list_int__tmp), new List<int>(akhz)));     //  شروع مجدد تابع 
+                        akhz = new List<int>(jame_list_int(majmooe, list_int, akhz));     //  شروع مجدد تابع
 
-                            if (akhz.Count > 0)       //  اگر خروجی صحیح بود
-                            {
-                                done = true;
-                                break;
-                            }
+                        if (akhz.Count > 0)       //  اگر خروجی صحیح بود
+                        {
+                            done = true;
+                            break;
                         }
                     }
                 }
@@ -274,7 +286,7 @@ namespace HJafr.main_codes
 
     }
 
-    public class value_change
+    public class Value_Change
     {
         public static string[] int_to_string_array(int[] num)
         {
@@ -305,7 +317,7 @@ namespace HJafr.main_codes
     /// <summary>
     /// <right>تنظیم کدهای ساعت</right>
     /// </summary>
-    public class saat_code
+    public class Saat_Code
     {
         public static double saat_tanzim(double num, bool manfi = true)
         {
@@ -321,15 +333,15 @@ namespace HJafr.main_codes
             string payani = "";
             for (int i = 0; i < saat.LongLength; i++)
             {
-                payani += code.get_zero(saat[i]);
+                payani += Code.get_zero(saat[i]);
                 if (i + 1 != saat.LongLength)
                     payani += ":";
             }
             return saat_tanzim(payani, manfi);
         }
-        public static int[] saat_tanzim_int(int[] saat, bool manfi = true) => num_to_array_saat(saat_tanzim(array_to_num_saat(saat), manfi));
-        public static string saat_tanzim(string saat, bool manfi = true) => num_to_saat(saat_tanzim(saat_to_num(saat), manfi));
-        public static string saat_tanzim_d_s(double num, bool manfi = true) => num_to_saat(saat_tanzim(num, manfi));
+        public static int[] saat_tanzim_int(int[] saat, bool manfi = true) { return num_to_array_saat(saat_tanzim(array_to_num_saat(saat), manfi)); }
+        public static string saat_tanzim(string saat, bool manfi = true) { return num_to_saat(saat_tanzim(saat_to_num(saat), manfi)); }
+        public static string saat_tanzim_d_s(double num, bool manfi = true) { return num_to_saat(saat_tanzim(num, manfi)); }
 
         /// <summary>
         /// تبدیل ساعت به عدد
@@ -362,7 +374,7 @@ namespace HJafr.main_codes
             string payani = "";
             for (int i = 0; i < bakhsh; i++)
             {
-                payani += code.get_zero((int)Math.Floor(num_hour));
+                payani += Code.get_zero((int)Math.Floor(num_hour));
                 if (i + 1 != bakhsh)
                     payani += ":";
                 num_hour = (num_hour - Math.Floor(num_hour)) * 60;

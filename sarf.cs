@@ -4,9 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+/// <summary>
+/// <right>صرف</right>
+/// <right>نسخه: 0.5.0</right>
+/// <right>تاریخ: 1403.07.11</right>
+/// </summary>
 namespace HJafr.sarf
 {
-    class adad
+    /// <summary><right>عدد</right></summary>
+    class Adad
     {
 
         /// <summary><right>تبدیل عدد به کلمه فارسی</right></summary>
@@ -266,7 +272,7 @@ namespace HJafr.sarf
     /// <summary>
     /// اعداد
     /// </summary>
-    class number
+    class Number
     {
         public static string ارمنی1(int num)
         {

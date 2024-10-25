@@ -6,9 +6,14 @@ using System.Threading.Tasks;
 using HJafr.ElmHorouf;
 using HJafr.main_codes;
 
+/// <summary>
+/// <right>ریاضی قدیمی</right>
+/// <right>نسخه: 1.0.0</right>
+/// <right>تاریخ: 1403.07.11</right>
+/// </summary>
 namespace HJafr.math_old_cls
 {
-    public class math_old
+    public class Math_Old
     {
         /// <summary><right>عدد بزرگ یا کوچک</right></summary>
         /// <param name="x">اعداد</param>
@@ -55,17 +60,30 @@ namespace HJafr.math_old_cls
         /// <param name="b">عدددوم</param>
         /// <param name="big"><right>گرفتن عدد بزرگتر</right></param>
         /// <returns></returns>
-        public static bool big_low(int a, int b, bool big) => big ? (a > b) : (a < b);
-
+        public static bool big_low(int a, int b, bool big) { return big ? (a > b) : (a < b); }
 
         /// <summary>
         /// <right>ب.م.م : بزرگترین عاد یا مقسوم علیه مشترک</right>
         /// </summary>
-        public static int bmm(int a, int b) => (b == 0) ? a : bmm(b, a % b);
+        public static int bmm(int a, int b) { return (b == 0) ? a : bmm(b, a % b); }
+        public static int bmm(int[] a)
+        {
+            int b = a[0];
+            for (int i = 0; i < a.Length; i++)
+                b = bmm(a[i], b);
+            return b;
+        }
         /// <summary>
         /// <right>ک.م.م : کوچکترین مضرب مشترک</right>
         /// </summary>
-        public static int kmm(int a, int b) => ((a * b) / bmm(a, b));
+        public static int kmm(int a, int b) { return (a * b) / bmm(a, b); }
+        public static int kmm(int[] a)
+        {
+            int b = 0;
+            for (int i = 0; i < a.LongLength; i++)
+                b = kmm(a[i], b);
+            return b;
+        }
 
 
         /// <summary>
@@ -117,7 +135,7 @@ namespace HJafr.math_old_cls
                     b -= (b.ToString().Substring(b.ToString().Length - 1) != "0") ? 1 :
                          (b.ToString().Substring(b.ToString().Length - 2) != "00") ? 10 : 100;
 
-                return code.Round(num, a, b);
+                return Code.Round(num, a, b);
             }
         }
 
@@ -149,7 +167,7 @@ namespace HJafr.math_old_cls
             if (a == b)        // متماثل
                 payani = 0;
             //else if (one && (i == 1 || k == 1))
-                //payani = 3;
+            //payani = 3;
             else if (bmm(a, b) == 1)        // متباین
                 payani = 1;
             else if (a % b == 0 || b % a == 0)        // متداخل
@@ -164,13 +182,15 @@ namespace HJafr.math_old_cls
     /// <summary>
     /// <right>ریاضیات و حروف</right>
     /// </summary>
-    public class math_harf
+    public class Math_Harf
     {
         /// <summary>
         /// <right>عدد بودن یک رشته</right>
         /// </summary>
         public static bool num_true(string num)
         {
+            if (num.Length == 0 || num == null)
+                return false;
             for (int i = 0; i < num.Length; i++)
                 if (!"۱۲۳۴۵۶۷۸۹۰1234567890١٢٣٤٥٦٧٨٩٠".Contains(num.Substring(i, 1)))
                     return false;
@@ -207,5 +227,64 @@ namespace HJafr.math_old_cls
             num = num.Replace("٠", "0");
             return num;
         }
+
+        /// <summary>
+        /// <right>تبدیل اعداد به عدد فارسی</right>
+        /// </summary>
+        public static string num_change_fa(string num)
+        {
+            //  اعداد فارسی
+            num = num.Replace("1", "۱");
+            num = num.Replace("2", "۲");
+            num = num.Replace("3", "۳");
+            num = num.Replace("4", "۴");
+            num = num.Replace("5", "۵");
+            num = num.Replace("6", "۶");
+            num = num.Replace("7", "۷");
+            num = num.Replace("8", "۸");
+            num = num.Replace("9", "۹");
+            num = num.Replace("0", "۰");
+
+            //  اعداد عربی
+            num = num.Replace("١", "1");
+            num = num.Replace("٢", "2");
+            num = num.Replace("٣", "3");
+            num = num.Replace("٤", "4");
+            num = num.Replace("٥", "5");
+            num = num.Replace("٦", "6");
+            num = num.Replace("٧", "7");
+            num = num.Replace("٨", "8");
+            num = num.Replace("٩", "9");
+            num = num.Replace("٠", "0");
+            return num;
+        }
+
+        /// <summary>
+        /// <right>چک کردن عدد بودن همه</right>
+        /// </summary>
+        public static string num_just(string num)
+        {
+            string payani = "";
+            num = num_change(num);
+            for (int i = 0; i < num.Length; i++)
+                if ("1234567890".Contains(num.Substring(i, 1)))
+                    payani += num.Substring(i, 1);
+            return payani;
+        }
+
+        /// <summary>
+        /// <right>افزایش رقم ها با صفر</right>
+        /// </summary>
+        public static string num_add_0(string num, int len)
+        {
+            for (int i = 0; i < len; i++)
+                if (num.Length < len)
+                    num = "0" + num;
+                else
+                    break;
+            return num;
+        }
+        public static string num_add_0(int num, int len) { return num_add_0(num.ToString(), len); }
+
     }
 }
