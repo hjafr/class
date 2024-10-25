@@ -16,7 +16,7 @@ namespace HJafr.data_cls
     /// <summary>
     /// <right>داده‌ها</right>
     /// </summary>
-    class Data
+    public class Data
     {
         /// <summary>
         /// <right>دایره‌های حروف</right>
